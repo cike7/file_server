@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>文件下载</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            background-color: blanchedalmond;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        form input {
+            background-color: cadetblue;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            border-radius: 20px;
+            margin: 20px;
+        }
+
+        h2 {
+            background-color: aqua;
+            margin: 10px;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+<h2>文件下载</h2>
+<form action="/api/file/download" enctype="multipart/form-data" method="POST">
+    <p style="-moz-margin-start: 20px">文件名<input id="filename" type="text"/></p>
+    <input type="button" value="下载" id="download"/>
+</form>
+</body>
+
+<script type="text/javascript">
+    $("#download").click(function () {
+        $.ajax({
+            //提交的网址
+            uri: 'api/file/download',
+            //提交数据的类型 POST GET
+            type: 'post',
+            async: true,
+            //（和url?Name="sanmao"&Password="sanmapword"一样）后台若为SpringMVC接受，注明@RequestParam
+            data: {
+                filename: $("#filename").val()
+            },
+            //返回数据的格式
+            dataType: 'json',
+            //成功返回之后调用的函数
+            success: function (data) {
+                alert(data);
+            },
+            //调用出错执行的函数
+            error: function () {
+                alert("异常");
+            }
+        })
+    })
+</script>
+</html>
